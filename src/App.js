@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Switch } from "react-router-dom";
+
+import Simple from "./container/Simple/Simple";
+import Full from "./container/Full/Full";
+
+import Home from "./component/Static/Home/Home";
+import About from "./component/Static/About/About";
+import Login from "./component/Auth/Login/Login";
+
+const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
+  <Route {...rest} render={props => (
+    <Layout>
+      <Component {...props} />
+    </Layout>
+  )} />
+)
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Switch>
+        <AppRoute exact path="/" layout={Full} component={Home} />
+        <AppRoute exact path="/about" layout={Full} component={About} />
+        <AppRoute exact path="/login" layout={Simple} component={Login} />          
+      </Switch>
     );
   }
 }
